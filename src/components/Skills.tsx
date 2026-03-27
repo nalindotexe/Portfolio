@@ -23,7 +23,7 @@ const skillCategories = [
     title: 'Backend',
     skills: [
       { name: 'Node.js', icon: <Server size={24} /> },
-      { name: 'PostgreSQL', icon: <Database size={24} /> },
+      { name: 'JSON', icon: <Database size={24} /> },
       { name: 'MongoDB', icon: <Database size={24} /> }
     ]
   },
@@ -33,7 +33,8 @@ const skillCategories = [
       { name: 'Git', icon: <Settings size={24} /> },
       { name: 'Firebase', icon: <Settings size={24} /> },
       { name: 'Vercel', icon: <Settings size={24} /> },
-      { name: 'Linux', icon: <Terminal size={24} /> }
+      { name: 'Linux', icon: <Terminal size={24} /> },
+      { name: 'Antigravity', icon: <Settings size={24} /> }
     ]
   }
 ];

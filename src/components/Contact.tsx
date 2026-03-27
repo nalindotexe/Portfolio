@@ -34,8 +34,8 @@ export function Contact() {
       </div>
 
       <footer className="footer">
-        <p>Built with React & Vanilla CSS.</p>
-        <p className="footer-credit">© {new Date().getFullYear()} Aditya Badiger Clone. All rights reserved.</p>
+        <p>Built with Antigravity and lots of Coffee.</p>
+        <p className="footer-credit">© {new Date().getFullYear()} nalindotexe. All rights reserved.</p>
       </footer>
     </section>
   );
