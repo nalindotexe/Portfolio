@@ -6,10 +6,9 @@ const skillCategories = [
   {
     title: 'Languages',
     skills: [
-      { name: 'C/C++', icon: <Code2 size={24} /> },
+      { name: 'C', icon: <Code2 size={24} /> },
       { name: 'Python', icon: <Terminal size={24} /> },
-      { name: 'JavaScript', icon: <Code2 size={24} /> },
-      { name: 'TypeScript', icon: <Code2 size={24} /> }
+      { name: 'HTML', icon: <Code2 size={24} /> },
     ]
   },
   {
@@ -18,14 +17,12 @@ const skillCategories = [
       { name: 'React', icon: <LayoutTemplate size={24} /> },
       { name: 'Next.js', icon: <LayoutTemplate size={24} /> },
       { name: 'Tailwind CSS', icon: <LayoutTemplate size={24} /> },
-      { name: 'Framer Motion', icon: <LayoutTemplate size={24} /> }
     ]
   },
   {
     title: 'Backend',
     skills: [
       { name: 'Node.js', icon: <Server size={24} /> },
-      { name: 'Express', icon: <Server size={24} /> },
       { name: 'PostgreSQL', icon: <Database size={24} /> },
       { name: 'MongoDB', icon: <Database size={24} /> }
     ]
@@ -34,8 +31,8 @@ const skillCategories = [
     title: 'Tools & DevOps',
     skills: [
       { name: 'Git', icon: <Settings size={24} /> },
-      { name: 'Docker', icon: <Settings size={24} /> },
-      { name: 'AWS', icon: <Settings size={24} /> },
+      { name: 'Firebase', icon: <Settings size={24} /> },
+      { name: 'Vercel', icon: <Settings size={24} /> },
       { name: 'Linux', icon: <Terminal size={24} /> }
     ]
   }

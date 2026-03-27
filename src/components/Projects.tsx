@@ -4,21 +4,21 @@ import './Projects.css';
 
 const projects = [
   {
-    title: 'E-COMMERCE PLATFORM',
-    description: 'A full-stack e-commerce solution with real-time inventory management, Stripe payment integration, and an admin dashboard.',
-    tags: ['Next.js', 'TypeScript', 'Tailwind', 'PostgreSQL'],
-    github: 'https://github.com',
-    live: 'https://example.com'
+    title: 'SprintSlides AI',
+    description: 'A full-stack Last-Minute Revision platform for students and learners for quick revision of topics and concepts.',
+    tags: ['Next.js', 'TypeScript', 'Tailwind', 'Python'],
+    github: 'https://github.com/nalindotexe/SprintSlidesAI',
+    live: 'https://sprintslides.web.app'
   },
   {
-    title: 'TASK MANAGER CLI',
-    description: 'A blazing fast command-line interface for managing daily tasks, written in Rust with SQLite integration for offline persistence.',
-    tags: ['Rust', 'SQLite', 'CLI'],
-    github: 'https://github.com',
-    live: 'https://example.com'
+    title: 'WelAware',
+    description: 'A basic HTML,CSS build that flags out harmful allergens and common irritants in cosmetic items.',
+    tags: ['HTML', 'CSS', 'JavaScript'],
+    github: 'https://github.com/nalindotexe/WelAware_Prototype',
+    live: 'https://nalindotexe.github.io/WelAware_Prototype/'
   },
   {
-    title: 'AI CHATBOT',
+    title: '"Deco-My-Tree"',
     description: 'A responsive chatbot interface integrating with OpenAI APIs to provide context-aware customer support for SaaS platforms.',
     tags: ['React', 'Node.js', 'OpenAI API'],
     github: 'https://github.com',
@@ -39,13 +39,13 @@ export function Projects() {
           <div key={index} className="project-card glass-card">
             <h3 className="project-title">{project.title}</h3>
             <p className="project-desc">{project.description}</p>
-            
+
             <div className="project-tags">
               {project.tags.map(tag => (
                 <span key={tag} className="tag">{tag}</span>
               ))}
             </div>
-            
+
             <div className="project-links">
               <a href={project.github} target="_blank" rel="noopener noreferrer" aria-label="Github Repo">
                 <Github size={20} />

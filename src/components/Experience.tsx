@@ -3,33 +3,33 @@ import './Experience.css';
 
 const experiences = [
   {
-    title: 'Senior Frontend Engineer',
-    company: 'Tech Innovators Inc.',
-    date: '2022 - PRESENT',
+    title: 'Student Coordinator',
+    company: '</DevBraze>',
+    date: '2025 - PRESENT',
     responsibilities: [
-      'Led the migration of a legacy monolithic frontend to a modern Next.js architecture.',
-      'Improved site performance by 40% through lazy loading and optimized assets.',
-      'Mentored junior developers and established code review guidelines.'
+      'Helped Organise a 14 Hour, 2-day hackathon for 100+ participants.',
+      'Helped Organise a 7 Hour Ideathon for 50+ participants',
+      'Currently working on future events and projects with the club'
     ]
   },
   {
-    title: 'Full Stack Developer',
-    company: 'Creative Solutions',
-    date: '2019 - 2022',
+    title: 'Aspiring Developer',
+    company: 'Hobbyist',
+    date: '2025 - PRESENT',
     responsibilities: [
-      'Developed and maintained RESTful APIs using Node.js and Express.',
-      'Built interactive UI components using React and Redux.',
-      'Collaborated with designers to ensure pixel-perfect implementations.'
+      'Developed a range of projects from simple scripts to full-stack applications.',
+      'Built a AI based Doctor Handwriting ananlyser for post doctor visit help.',
+      'Attended a 2 day hackathon and built a working prototype of a product.'
     ]
   },
   {
-    title: 'Junior Web Developer',
-    company: 'Startup Hub',
-    date: '2017 - 2019',
+    title: 'Ameteur Astronomer',
+    company: 'Hobbyist',
+    date: '2014 - PRESENT',
     responsibilities: [
-      'Assisted in developing landing pages and marketing sites.',
-      'Wrote unit tests and end-to-end tests to ensure application stability.',
-      'Participated in daily standups and agile sprints.'
+      'Stargazing and understanding the concepts of the Universe',
+      'Learnt the basics of Astrophotography',
+      'Discovered a new astoriod in the main asteriod belt as part of AIASC 2021.'
     ]
   }
 ];
