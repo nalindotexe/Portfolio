@@ -27,10 +27,13 @@ html {
   background-color: var(--bg-color);
   color: var(--text-primary);
   font-family: var(--font-body);
+  overflow-x: hidden;
 }
 
-body {
+body, #root {
   overflow-x: hidden;
+  width: 100%;
+  position: relative;
 }
 
 /* persistent viewport frame */
