@@ -19,10 +19,10 @@ const projects = [
   },
   {
     title: '"Deco-My-Tree"',
-    description: 'A responsive chatbot interface integrating with OpenAI APIs to provide context-aware customer support for SaaS platforms.',
-    tags: ['React', 'Node.js', 'OpenAI API'],
-    github: 'https://github.com',
-    live: 'https://example.com'
+    description: 'A Clone of the site decomytree I made as the original was not working. Used to send Christmas messages to your friends.',
+    tags: ['React', 'Node.js', 'Python'],
+    github: 'https://github.com/nalindotexe/deco-my-tree',
+    live: 'https://deco-my-tree.vercel.app/'
   }
 ];
 
