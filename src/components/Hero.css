@@ -4,6 +4,36 @@
   justify-content: center;
   text-align: center;
   min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Particles Background */
+.particles-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  background-color: var(--accent-blue);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--accent-blue);
+  opacity: 0.2;
+  animation: float-up linear infinite;
+}
+
+@keyframes float-up {
+  0% { transform: translateY(100vh) scale(0); opacity: 0; }
+  10% { opacity: 0.3; }
+  90% { opacity: 0.3; }
+  100% { transform: translateY(-100px) scale(1); opacity: 0; }
 }
 
 .hero-content {
@@ -12,6 +42,8 @@
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
+  position: relative;
+  z-index: 10;
 }
 
 .hero-subtitle {
@@ -21,11 +53,53 @@
   letter-spacing: 4px;
 }
 
+.typewriter {
+  overflow: hidden;
+  border-right: .15em solid var(--accent-orange);
+  white-space: nowrap;
+  margin: 0 auto;
+  letter-spacing: .15em;
+  animation: 
+    typing 1.5s steps(40, end),
+    blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: var(--accent-orange); }
+}
+
 .hero-title {
   font-size: clamp(3rem, 10vw, 7rem);
   line-height: 1.1;
   margin: 0;
-  /* Glow is applied via global utility .glow-text */
+  position: relative;
+}
+
+.neon-flicker {
+  animation: flicker 4s infinite alternate;
+}
+
+@keyframes flicker {
+    0%, 18%, 22%, 25%, 53%, 57%, 100% {
+        text-shadow:
+        0 0 4px #fff,
+        0 0 11px #fff,
+        0 0 19px #fff,
+        0 0 40px var(--accent-orange),
+        0 0 80px var(--accent-orange),
+        0 0 90px var(--accent-orange),
+        0 0 100px var(--accent-orange),
+        0 0 150px var(--accent-orange);
+    }
+    20%, 24%, 55% {       
+        text-shadow: none;
+    }    
 }
 
 .hero-description {
@@ -36,6 +110,19 @@
   margin-top: 1rem;
 }
 
+.fade-in-delay {
+  animation: fade-up 1s ease-out 1.5s both;
+}
+
+.fade-in-delay-more {
+  animation: fade-up 1s ease-out 2s both;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .hero-socials {
   display: flex;
   gap: 2rem;
@@ -43,19 +130,38 @@
 }
 
 .social-link {
-  color: var(--accent-orange);
-  transition: all 0.3s ease;
-  filter: drop-shadow(0 0 5px rgba(255, 102, 0, 0.2));
+  color: var(--accent-blue);
+  transition: color 0.3s ease, filter 0.3s ease;
+  filter: drop-shadow(0 0 5px rgba(0, 255, 255, 0.2));
+  display: inline-block;
+  padding: 10px;
+  border-radius: 50%;
+  border: 1px solid transparent;
 }
 
-.social-link:hover {
-  transform: translateY(-5px) scale(1.1);
-  filter: drop-shadow(var(--glow-orange));
+.magnetic {
+  /* Using JS for transform, so we define transition for other properties */
+  transition: transform 0.1s cubic-bezier(0.2, 0.8, 0.4, 1), 
+              color 0.3s ease, 
+              filter 0.3s ease,
+              border-color 0.3s ease,
+              background-color 0.3s ease;
+}
+
+.magnetic:hover {
+  color: var(--text-primary);
+  border-color: rgba(0, 255, 255, 0.5);
+  background-color: rgba(0, 255, 255, 0.1);
+  filter: drop-shadow(0 0 10px var(--accent-blue));
 }
 
 @media (max-width: 768px) {
   .hero-description {
     font-size: 1rem;
     padding: 0 1rem;
+  }
+
+  .magnetic {
+    transform: none !important;
   }
 }
