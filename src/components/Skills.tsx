@@ -1,4 +1,5 @@
 
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import './Skills.css';
 import { Rocket } from 'lucide-react';
 import {
@@ -16,6 +17,93 @@ import {
   SiVercel,
   SiLinux
 } from 'react-icons/si';
+
+// Core component handles the dragging and auto-scrolling
+function DraggableMarquee({ children }: { children: React.ReactNode }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  
+  // For auto scroll
+  const reqRef = useRef<number>(0);
+  const isHovered = useRef(false);
+
+  // Auto Scroll logic
+  const step = useCallback((_time: number) => {
+    if (containerRef.current && trackRef.current) {
+      if (!isDragging && !isHovered.current) {
+        containerRef.current.scrollLeft += 1; // Auto scroll speed
+      }
+
+      // Infinite loop constraint
+      const maxScroll = containerRef.current.scrollWidth / 2;
+      if (containerRef.current.scrollLeft >= maxScroll) {
+        containerRef.current.scrollLeft -= maxScroll;
+      } else if (containerRef.current.scrollLeft <= 0 && isDragging) {
+        // Handle dragging backwards infinitely
+        containerRef.current.scrollLeft += maxScroll;
+      }
+    }
+    reqRef.current = requestAnimationFrame(step);
+  }, [isDragging]);
+
+  useEffect(() => {
+    reqRef.current = requestAnimationFrame(step);
+    return () => {
+      if (reqRef.current) cancelAnimationFrame(reqRef.current);
+    };
+  }, [step]);
+
+  // Mouse Drag Events
+  const onMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true);
+    setStartX(e.pageX - (containerRef.current?.offsetLeft || 0));
+    setScrollLeft(containerRef.current?.scrollLeft || 0);
+  };
+
+  const onMouseLeave = () => {
+    setIsDragging(false);
+    isHovered.current = false;
+  };
+
+  const onMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const onMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - (containerRef.current?.offsetLeft || 0);
+    const walk = (x - startX) * 1.5; // Drag speed multiplier
+    if (containerRef.current) {
+      containerRef.current.scrollLeft = scrollLeft - walk;
+    }
+  };
+
+  return (
+    <div 
+      className={`skills-marquee-container ${isDragging ? 'grabbing' : ''}`}
+      ref={containerRef}
+      onMouseDown={onMouseDown}
+      onMouseLeave={onMouseLeave}
+      onMouseUp={onMouseUp}
+      onMouseMove={onMouseMove}
+      onMouseEnter={() => isHovered.current = true}
+    >
+      <div className="skills-marquee-track" ref={trackRef}>
+        <div className="skills-marquee-content">
+          {children}
+        </div>
+        <div className="skills-marquee-content" aria-hidden="true">
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 const skillCategories = [
   {
@@ -64,33 +152,21 @@ export function Skills() {
 
       <div className="skills-container">
         {skillCategories.map((category) => {
-          // Duplicate skills enough times to fill ultra-wide screens for smaller categories
-          const extendedSkills = [...category.skills, ...category.skills, ...category.skills];
+          // Duplicate heavily so that even ultra-widescreen monitors have enough to scroll
+          const extendedSkills = [...category.skills, ...category.skills, ...category.skills, ...category.skills, ...category.skills];
 
           return (
             <div key={category.title} className="skill-category">
               <h3 className="category-title">{category.title}</h3>
 
-              <div className="skills-marquee-container">
-                <div className="skills-marquee-track">
-                  <div className="skills-marquee-content">
-                    {extendedSkills.map((skill, index) => (
-                      <div key={`${skill.name}-1-${index}`} className="skill-card glass-card">
-                        <span className="skill-icon text-orange">{skill.icon}</span>
-                        <span className="skill-name">{skill.name}</span>
-                      </div>
-                    ))}
+              <DraggableMarquee>
+                {extendedSkills.map((skill, index) => (
+                  <div key={`${skill.name}-${index}`} className="skill-card glass-card">
+                    <span className="skill-icon text-orange">{skill.icon}</span>
+                    <span className="skill-name">{skill.name}</span>
                   </div>
-                  <div className="skills-marquee-content" aria-hidden="true">
-                    {extendedSkills.map((skill, index) => (
-                      <div key={`${skill.name}-2-${index}`} className="skill-card glass-card">
-                        <span className="skill-icon text-orange">{skill.icon}</span>
-                        <span className="skill-name">{skill.name}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
+                ))}
+              </DraggableMarquee>
 
             </div>
           );

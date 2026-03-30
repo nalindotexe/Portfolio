@@ -17,39 +17,41 @@
 }
 
 .skills-marquee-container {
-  overflow: hidden;
+  overflow-x: scroll; /* Required for native scrollLeft tracking */
   width: 100%;
   padding: 1rem 0;
   position: relative;
-  /* Soft fading edges for a cooler aesthetic */
+  /* Hide scrollbar */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  
+  /* UX */
+  cursor: grab;
+  /* Soft fading edges */
   mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
   -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.skills-marquee-container::-webkit-scrollbar {
+  display: none;
+}
+
+.skills-marquee-container.grabbing {
+  cursor: grabbing;
 }
 
 .skills-marquee-track {
   display: flex;
   width: max-content;
-  animation: marquee 20s linear infinite;
   gap: 1.5rem;
+  padding-right: 1.5rem; /* to match gap for exact duplicate width */
 }
 
-.skills-marquee-track:hover {
-  animation-play-state: paused;
-}
+/* Pause the auto JS scroll by hovering which is handled in React */
 
 .skills-marquee-content {
   display: flex;
   gap: 1.5rem;
-}
-
-@keyframes marquee {
-  0% {
-    transform: translateX(0);
-  }
-
-  100% {
-    transform: translateX(calc(-50% - 0.75rem));
-  }
 }
 
 .skill-card {
@@ -59,12 +61,21 @@
   justify-content: center;
   gap: 1rem;
   padding: 2rem;
-  cursor: default;
   min-width: 160px;
+  /* Make sure you cannot highlight text while dragging */
+  user-select: none;
+  -webkit-user-select: none;
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), 
+              background-color 0.3s ease, 
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
 }
 
 .skill-card:hover {
-  background: rgba(0, 128, 254, 0.05);
+  background: rgba(0, 255, 255, 0.05);
+  border-color: rgba(0, 255, 255, 0.4);
+  transform: translateY(-5px);
+  box-shadow: 0 4px 20px rgba(0, 255, 255, 0.1);
 }
 
 .skill-icon {
@@ -88,9 +99,5 @@
   .skill-card {
     min-width: 120px;
     padding: 1.5rem;
-  }
-
-  .skills-marquee-track {
-    animation-duration: 15s;
   }
 }

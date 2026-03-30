@@ -6,20 +6,106 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 2rem;
+  perspective: 1000px;
 }
 
-.project-card {
+.interactive-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.1s ease-out, border-color 0.3s ease;
+  transform-style: preserve-3d;
+  background: var(--glass-bg);
+  /* Glass card overrides */
+  height: 100%;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.interactive-card:hover {
+  border-color: rgba(0, 255, 255, 0.5); /* Cyan border on hover */
+  z-index: 10;
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.15);
+}
+
+/* Specific spotlight effect */
+.card-spotlight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: radial-gradient(
+    800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(255, 255, 255, 0.06),
+    transparent 40%
+  );
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.interactive-card:hover .card-spotlight {
+  opacity: 1;
+}
+
+.card-content {
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  width: 100%;
   align-items: flex-start;
+  transform: translateZ(20px); /* 3D pop out effect on content */
 }
 
-.project-title {
+/* Glitch Title Effect */
+.glitch-hover {
+  position: relative;
   font-size: 1.25rem;
   color: var(--text-primary);
   margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.glitch-hover::before,
+.glitch-hover::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+.interactive-card:hover .glitch-hover::before {
+  left: 2px;
+  text-shadow: -1px 0 rgba(0, 255, 255, 0.8);
+  clip: rect(24px, 550px, 90px, 0);
+  animation: glitch-anim 2s infinite linear alternate-reverse;
+  opacity: 1;
+}
+
+.interactive-card:hover .glitch-hover::after {
+  left: -2px;
+  text-shadow: -1px 0 rgba(0, 128, 254, 0.8);
+  clip: rect(85px, 550px, 140px, 0);
+  animation: glitch-anim 2s infinite linear alternate-reverse;
+  opacity: 1;
+}
+
+@keyframes glitch-anim {
+  0% { clip: rect(10px, 9999px, 83px, 0); }
+  20% { clip: rect(61px, 9999px, 81px, 0); }
+  40% { clip: rect(11px, 9999px, 47px, 0); }
+  60% { clip: rect(15px, 9999px, 3px, 0); }
+  80% { clip: rect(50px, 9999px, 42px, 0); }
+  100% { clip: rect(82px, 9999px, 20px, 0); }
 }
 
 .project-desc {
@@ -38,13 +124,20 @@
 }
 
 .tag {
-  background: rgba(255, 102, 0, 0.1);
-  color: var(--accent-orange);
+  background: rgba(0, 255, 255, 0.05); /* Cyber cyan tag background */
+  color: var(--accent-blue);
   font-size: 0.75rem;
   padding: 0.25rem 0.75rem;
   border-radius: 4px;
   font-weight: 500;
   letter-spacing: 1px;
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.interactive-card:hover .tag {
+  background: rgba(0, 255, 255, 0.15);
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
 }
 
 .project-links {
@@ -58,13 +151,22 @@
 }
 
 .project-links a:hover {
-  color: var(--accent-orange);
-  transform: scale(1.1);
-  filter: drop-shadow(var(--glow-orange));
+  color: var(--accent-blue);
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 8px rgba(0, 255, 255, 0.8));
 }
 
 @media (max-width: 768px) {
   .projects-grid {
     grid-template-columns: 1fr;
+  }
+  
+  .interactive-card {
+    /* Disable 3D tilt on mobile for better scrolling experience */
+    transform: none !important;
+  }
+  
+  .interactive-card::before, .interactive-card::after {
+    display: none;
   }
 }

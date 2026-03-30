@@ -1,5 +1,6 @@
-
 import { ExternalLink, Github } from 'lucide-react';
+import React, { useRef, useState } from 'react';
+import type { MouseEvent } from 'react';
 import './Projects.css';
 
 const projects = [
@@ -26,6 +27,69 @@ const projects = [
   }
 ];
 
+function ProjectCard({ project }: { project: typeof projects[0] }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [style, setStyle] = useState<React.CSSProperties>({});
+
+  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotateX = ((y - centerY) / centerY) * -10; // Max 10 deg tilt
+    const rotateY = ((x - centerX) / centerX) * 10;
+
+    setStyle({
+      transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`,
+      '--mouse-x': `${x}px`,
+      '--mouse-y': `${y}px`,
+    } as React.CSSProperties);
+  };
+
+  const handleMouseLeave = () => {
+    setStyle({
+      transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)',
+      '--mouse-x': '50%',
+      '--mouse-y': '50%',
+    } as React.CSSProperties);
+  };
+
+  return (
+    <div
+      ref={cardRef}
+      className="project-card glass-card interactive-card"
+      style={style}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div className="card-spotlight"></div>
+      <div className="card-content">
+        <h3 className="project-title glitch-hover" data-text={project.title}>{project.title}</h3>
+        <p className="project-desc">{project.description}</p>
+
+        <div className="project-tags">
+          {project.tags.map(tag => (
+            <span key={tag} className="tag">{tag}</span>
+          ))}
+        </div>
+
+        <div className="project-links">
+          <a href={project.github} target="_blank" rel="noopener noreferrer" aria-label="Github Repo">
+            <Github size={20} />
+          </a>
+          <a href={project.live} target="_blank" rel="noopener noreferrer" aria-label="Live Site">
+            <ExternalLink size={20} />
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function Projects() {
   return (
     <section id="projects" className="projects-section fade-in-section">
@@ -36,25 +100,7 @@ export function Projects() {
 
       <div className="projects-grid">
         {projects.map((project, index) => (
-          <div key={index} className="project-card glass-card">
-            <h3 className="project-title">{project.title}</h3>
-            <p className="project-desc">{project.description}</p>
-
-            <div className="project-tags">
-              {project.tags.map(tag => (
-                <span key={tag} className="tag">{tag}</span>
-              ))}
-            </div>
-
-            <div className="project-links">
-              <a href={project.github} target="_blank" rel="noopener noreferrer" aria-label="Github Repo">
-                <Github size={20} />
-              </a>
-              <a href={project.live} target="_blank" rel="noopener noreferrer" aria-label="Live Site">
-                <ExternalLink size={20} />
-              </a>
-            </div>
-          </div>
+          <ProjectCard key={index} project={project} />
         ))}
       </div>
     </section>
