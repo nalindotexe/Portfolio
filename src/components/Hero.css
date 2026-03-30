@@ -156,6 +156,18 @@
 }
 
 @media (max-width: 768px) {
+  .hero-subtitle {
+     letter-spacing: 2px;
+  }
+
+  .typewriter {
+    white-space: normal;
+    animation: none;
+    border-right: none;
+    width: 100%;
+    padding: 0 1rem;
+  }
+
   .hero-description {
     font-size: 1rem;
     padding: 0 1rem;
