@@ -1,5 +1,5 @@
 import { ExternalLink, Github } from 'lucide-react';
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import type { MouseEvent } from 'react';
 import './Projects.css';
 import gsap from 'gsap';
