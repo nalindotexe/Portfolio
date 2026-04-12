@@ -1,7 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
 import './Experience.css';
+import { Rocket } from 'lucide-react';
+import { FaMeteor } from 'react-icons/fa6';
 
 const experiences = [
+  {
+    title: 'Core Team Member',
+    company: 'Algorand Blockchain Club REVA',
+    date: '2025 - PRESENT',
+    responsibilities: [
+      'Organised a 24 Hour blockchain hackathon for 150+ participants.',
+      'Currently working on future events and projects on blockchain with the club'
+    ]
+  },
   {
     title: 'Student Coordinator',
     company: '</DevBraze>',
@@ -71,8 +82,48 @@ function TimelineItem({ exp, index }: { exp: typeof experiences[0], index: numbe
 }
 
 export function Experience() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [scrollDirection, setScrollDirection] = useState<'down' | 'up'>('down');
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!sectionRef.current) return;
+      
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY.current) {
+        setScrollDirection('down');
+      } else if (currentScrollY < lastScrollY.current) {
+        setScrollDirection('up');
+      }
+      lastScrollY.current = currentScrollY;
+
+      // Calculate progress
+      const rect = sectionRef.current.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      
+      // We want progress to be 0 when the top of the timeline is near the middle of the screen
+      const startOffset = viewportHeight * 0.7; 
+      const totalDistance = rect.height;
+      const scrolled = startOffset - rect.top;
+      
+      let progress = scrolled / totalDistance;
+      progress = Math.max(0, Math.min(1, progress));
+      setScrollProgress(progress);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Initial check
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const isAtTop = scrollProgress <= 0;
+  const isAtBottom = scrollProgress >= 1;
+
   return (
-    <section id="experience" className="experience-section fade-in-section">
+    <section id="experience" className="experience-section fade-in-section" ref={sectionRef}>
       <div className="section-header center-header">
         <h3 className="section-subtitle">CAREER PATH</h3>
         <h2 className="section-title text-orange glow-text">JOURNEY</h2>
@@ -80,6 +131,24 @@ export function Experience() {
 
       <div className="timeline">
         <div className="timeline-beam"></div>
+        <div className="timeline-tracker-container">
+           <div 
+             className={`timeline-ship ${scrollDirection} ${isAtTop ? 'idle-top' : ''} ${isAtBottom ? 'impact-bottom' : ''}`}
+             style={{ top: `${scrollProgress * 100}%` }}
+           >
+             {scrollDirection === 'down' ? (
+                <FaMeteor className="ship-icon asteroid-falling" />
+             ) : (
+                <Rocket className="ship-icon rocket-rising" />
+             )}
+             {isAtBottom && scrollDirection === 'down' && (
+                <div className="impact-crater"></div>
+             )}
+             {isAtTop && scrollDirection === 'up' && (
+                <div className="rocket-exhaust"></div>
+             )}
+           </div>
+        </div>
         {experiences.map((exp, index) => (
           <TimelineItem key={index} exp={exp} index={index} />
         ))}

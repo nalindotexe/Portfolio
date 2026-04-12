@@ -72,20 +72,20 @@
 }
 
 .skill-card:hover {
-  background: rgba(0, 255, 255, 0.05);
-  border-color: rgba(0, 255, 255, 0.4);
+  background: rgba(56, 189, 248, 0.05);
+  border-color: var(--accent-primary);
   transform: translateY(-5px);
-  box-shadow: 0 4px 20px rgba(0, 255, 255, 0.1);
+  box-shadow: var(--glow-hover);
 }
 
 .skill-icon {
   display: flex;
-  filter: drop-shadow(0 0 5px rgba(0, 128, 254, 0.5));
+  filter: drop-shadow(0 0 5px rgba(56, 189, 248, 0.5));
   transition: filter 0.3s ease;
 }
 
 .skill-card:hover .skill-icon {
-  filter: drop-shadow(0 0 10px rgba(0, 128, 254, 0.8));
+  filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.8));
 }
 
 .skill-name {

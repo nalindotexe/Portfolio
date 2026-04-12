@@ -8,33 +8,6 @@
   overflow: hidden;
 }
 
-/* Particles Background */
-.particles-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-  overflow: hidden;
-}
-
-.particle {
-  position: absolute;
-  background-color: var(--accent-blue);
-  border-radius: 50%;
-  box-shadow: 0 0 10px var(--accent-blue);
-  opacity: 0.2;
-  animation: float-up linear infinite;
-}
-
-@keyframes float-up {
-  0% { transform: translateY(100vh) scale(0); opacity: 0; }
-  10% { opacity: 0.3; }
-  90% { opacity: 0.3; }
-  100% { transform: translateY(-100px) scale(1); opacity: 0; }
-}
 
 .hero-content {
   max-width: 800px;
@@ -55,23 +28,24 @@
 
 .typewriter {
   overflow: hidden;
-  border-right: .15em solid var(--accent-orange);
+  border-right: .15em solid var(--accent-primary);
   white-space: nowrap;
   margin: 0 auto;
   letter-spacing: .15em;
+  width: 145px; /* Precision width locking the HEY, I'M text bounds */
   animation: 
-    typing 1.5s steps(40, end),
+    typing 1.2s steps(8, end) forwards,
     blink-caret .75s step-end infinite;
 }
 
 @keyframes typing {
   from { width: 0 }
-  to { width: 100% }
+  /* Omit 'to' so it natively interpolates cleanly to the defined 145px width */
 }
 
 @keyframes blink-caret {
   from, to { border-color: transparent }
-  50% { border-color: var(--accent-orange); }
+  50% { border-color: var(--accent-primary); }
 }
 
 .hero-title {
@@ -81,25 +55,31 @@
   position: relative;
 }
 
-.neon-flicker {
-  animation: flicker 4s infinite alternate;
+.cosmic-glow {
+  background: linear-gradient(
+    to right,
+    var(--accent-orange),
+    #9d00ff,
+    var(--accent-blue),
+    #9d00ff,
+    var(--accent-orange)
+  );
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: cosmic-sweep 8s linear infinite, cosmic-pulse 4s ease-in-out infinite alternate;
 }
 
-@keyframes flicker {
-    0%, 18%, 22%, 25%, 53%, 57%, 100% {
-        text-shadow:
-        0 0 4px #fff,
-        0 0 11px #fff,
-        0 0 19px #fff,
-        0 0 40px var(--accent-orange),
-        0 0 80px var(--accent-orange),
-        0 0 90px var(--accent-orange),
-        0 0 100px var(--accent-orange),
-        0 0 150px var(--accent-orange);
-    }
-    20%, 24%, 55% {       
-        text-shadow: none;
-    }    
+@keyframes cosmic-sweep {
+  to {
+    background-position: 200% center;
+  }
+}
+
+@keyframes cosmic-pulse {
+  0% { filter: drop-shadow(0 0 10px rgba(0, 128, 254, 0.4)); }
+  100% { filter: drop-shadow(0 0 30px rgba(0, 255, 255, 0.8)); }
 }
 
 .hero-description {
@@ -150,9 +130,10 @@
 
 .magnetic:hover {
   color: var(--text-primary);
-  border-color: rgba(0, 255, 255, 0.5);
-  background-color: rgba(0, 255, 255, 0.1);
-  filter: drop-shadow(0 0 10px var(--accent-blue));
+  border-color: var(--accent-primary);
+  background-color: rgba(56, 189, 248, 0.1);
+  /* Use filter drop-shadow to map to the new glow style natively */
+  filter: drop-shadow(0 0 8px var(--accent-primary)) drop-shadow(0 0 20px var(--accent-strong));
 }
 
 @media (max-width: 768px) {

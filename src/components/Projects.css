@@ -24,9 +24,9 @@
 }
 
 .interactive-card:hover {
-  border-color: rgba(0, 255, 255, 0.5); /* Cyan border on hover */
+  border-color: var(--accent-primary);
   z-index: 10;
-  box-shadow: 0 0 30px rgba(0, 255, 255, 0.15);
+  box-shadow: var(--glow-hover);
 }
 
 /* Specific spotlight effect */
@@ -124,20 +124,20 @@
 }
 
 .tag {
-  background: rgba(0, 255, 255, 0.05); /* Cyber cyan tag background */
-  color: var(--accent-blue);
+  background: rgba(56, 189, 248, 0.05);
+  color: var(--accent-primary);
   font-size: 0.75rem;
   padding: 0.25rem 0.75rem;
   border-radius: 4px;
   font-weight: 500;
   letter-spacing: 1px;
-  border: 1px solid rgba(0, 255, 255, 0.2);
+  border: 1px solid rgba(56, 189, 248, 0.2);
   transition: all 0.3s ease;
 }
 
 .interactive-card:hover .tag {
-  background: rgba(0, 255, 255, 0.15);
-  box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+  background: rgba(56, 189, 248, 0.15);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
 }
 
 .project-links {
@@ -151,9 +151,9 @@
 }
 
 .project-links a:hover {
-  color: var(--accent-blue);
+  color: var(--accent-strong);
   transform: scale(1.2);
-  filter: drop-shadow(0 0 8px rgba(0, 255, 255, 0.8));
+  filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.8));
 }
 
 @media (max-width: 768px) {

@@ -40,11 +40,11 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
 
-    const rotateX = ((y - centerY) / centerY) * -10; // Max 10 deg tilt
-    const rotateY = ((x - centerX) / centerX) * 10;
+    const rotateX = ((y - centerY) / centerY) * -2; // Reduced from -10 for easier clicking
+    const rotateY = ((x - centerX) / centerX) * 2; // Reduced from 10
 
     setStyle({
-      transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`,
+      transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`,
       '--mouse-x': `${x}px`,
       '--mouse-y': `${y}px`,
     } as React.CSSProperties);

@@ -8,17 +8,26 @@ export function About() {
         <h3 className="section-subtitle">ABOUT</h3>
         <h2 className="section-title text-orange">DYNAMIC DEVELOPER</h2>
       </div>
-      
+
       <div className="about-content">
         <p className="about-text">
-          I am a passionate software engineer focused on building robust backends and stunning, interactive frontends. 
-          I believe in writing clean code and creating user experiences that are not only functional but visually captivating.
+          I am a curious explorer at heart, driven by a fundamental need to understand how the world and the technology within it operates.
+          My journey into software engineering was fueled by this "how it works" mindset, leading me to build robust backends and
+          visually captivating frontends that bridge the gap between complex logic and human experience.
         </p>
         <p className="about-text">
-          My journey started with a fascination for how things work on the web, leading me to master a diverse set of technologies across the stack. 
-          When I'm not coding, I'm exploring new design trends or contributing to open-source software.
+          I have a deep seated fascination with space and rocketry, which mirrors my approach to tech:
+          I believe in precision, clean code, and building systems capable of reaching new heights.
+          Whether I’m architecting a database or crafting an interactive user interface,
+          I treat every project like a mission, ensuring every component is "flight ready" and functional.
         </p>
-        
+
+        <p className="about-text">
+          When I’m not at my terminal, you’ll likely find me keeping up with the latest rocket launches,
+          exploring cutting edge design trends, or diving into open source projects.
+          For me, programming isn't just about writing lines of code it’s about satisfying a lifelong curiosity
+          and building the tools that power the next frontier.
+        </p>
         <div className="about-actions">
           <a href="/resume.pdf" target="_blank" className="btn-outline">
             DOWNLOAD RESUME
