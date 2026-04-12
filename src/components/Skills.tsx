@@ -23,18 +23,15 @@ function DraggableMarquee({ children }: { children: React.ReactNode }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
 
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
-  
   // For auto scroll
   const reqRef = useRef<number>(0);
   const isHovered = useRef(false);
+  const lastMouseX = useRef<number | null>(null);
 
   // Auto Scroll logic
   const step = useCallback((_time: number) => {
     if (containerRef.current && trackRef.current) {
-      if (!isDragging && !isHovered.current) {
+      if (!isHovered.current) {
         containerRef.current.scrollLeft += 1; // Auto scroll speed
       }
 
@@ -42,13 +39,13 @@ function DraggableMarquee({ children }: { children: React.ReactNode }) {
       const maxScroll = containerRef.current.scrollWidth / 2;
       if (containerRef.current.scrollLeft >= maxScroll) {
         containerRef.current.scrollLeft -= maxScroll;
-      } else if (containerRef.current.scrollLeft <= 0 && isDragging) {
-        // Handle dragging backwards infinitely
+      } else if (containerRef.current.scrollLeft <= 0) {
+        // Handle dragging backwards infinitely at all times
         containerRef.current.scrollLeft += maxScroll;
       }
     }
     reqRef.current = requestAnimationFrame(step);
-  }, [isDragging]);
+  }, []);
 
   useEffect(() => {
     reqRef.current = requestAnimationFrame(step);
@@ -57,41 +54,34 @@ function DraggableMarquee({ children }: { children: React.ReactNode }) {
     };
   }, [step]);
 
-  // Mouse Drag Events
-  const onMouseDown = (e: React.MouseEvent) => {
-    setIsDragging(true);
-    setStartX(e.pageX - (containerRef.current?.offsetLeft || 0));
-    setScrollLeft(containerRef.current?.scrollLeft || 0);
+  // Mouse Hover Events
+  const onMouseEnter = (e: React.MouseEvent) => {
+    isHovered.current = true;
+    lastMouseX.current = e.pageX;
   };
 
   const onMouseLeave = () => {
-    setIsDragging(false);
     isHovered.current = false;
-  };
-
-  const onMouseUp = () => {
-    setIsDragging(false);
+    lastMouseX.current = null;
   };
 
   const onMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging) return;
-    e.preventDefault();
-    const x = e.pageX - (containerRef.current?.offsetLeft || 0);
-    const walk = (x - startX) * 1.5; // Drag speed multiplier
-    if (containerRef.current) {
-      containerRef.current.scrollLeft = scrollLeft - walk;
+    if (!isHovered.current) return;
+    
+    if (lastMouseX.current !== null && containerRef.current) {
+      const dx = e.pageX - lastMouseX.current;
+      containerRef.current.scrollLeft -= dx * 1.5; // Drag speed multiplier
     }
+    lastMouseX.current = e.pageX;
   };
 
   return (
     <div 
-      className={`skills-marquee-container ${isDragging ? 'grabbing' : ''}`}
+      className="skills-marquee-container"
       ref={containerRef}
-      onMouseDown={onMouseDown}
+      onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      onMouseUp={onMouseUp}
       onMouseMove={onMouseMove}
-      onMouseEnter={() => isHovered.current = true}
     >
       <div className="skills-marquee-track" ref={trackRef}>
         <div className="skills-marquee-content">

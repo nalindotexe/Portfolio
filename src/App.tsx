@@ -12,15 +12,40 @@ import { Contact } from './components/Contact';
 
 function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
+  const lastPos = useRef({ x: 0, y: 0 });
+  const currentAngle = useRef(90);
 
   useEffect(() => {
     const isMobile = window.matchMedia('(max-width: 768px)').matches;
     if (isMobile) return; // Disable custom cursor on mobile to save performance/bugs
 
     const handleMouseMove = (e: MouseEvent) => {
+      const x = e.clientX;
+      const y = e.clientY;
+
       if (cursorRef.current) {
-        cursorRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+        cursorRef.current.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+
+        const dx = x - lastPos.current.x;
+        const dy = y - lastPos.current.y;
+        
+        // Only update angle if moving to avoid erratic jumps
+        if (Math.abs(dx) > 2 || Math.abs(dy) > 2) {
+          const rawAngle = Math.atan2(dy, dx) * (180 / Math.PI) - 135; 
+          
+          let diff = (rawAngle - currentAngle.current) % 360;
+          if (diff < -180) diff += 360;
+          if (diff > 180) diff -= 360;
+          
+          currentAngle.current += diff;
+
+          const asteroid = cursorRef.current.querySelector('.asteroid-cursor') as HTMLElement;
+          if (asteroid) {
+            asteroid.style.setProperty('--dynamic-angle', `${currentAngle.current}deg`);
+          }
+        }
       }
+      lastPos.current = { x, y };
     };
 
     const handleMouseOver = (e: MouseEvent) => {

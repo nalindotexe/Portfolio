@@ -26,6 +26,91 @@
   border-radius: 2px;
 }
 
+.timeline-tracker-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  z-index: 3;
+}
+
+.timeline-ship {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: top 0.1s ease-out; /* Smooth scroll jumps */
+  pointer-events: none;
+}
+
+.ship-icon {
+  font-size: 2.5rem;
+  color: var(--accent-orange);
+  filter: drop-shadow(0 0 10px rgba(0, 128, 254, 0.8));
+  display: block;
+}
+
+.asteroid-falling {
+  transform: rotate(-45deg);
+}
+
+.rocket-rising {
+  transform: rotate(-45deg);
+  font-size: 3.5rem; /* Made specifically larger */
+}
+
+.impact-bottom .asteroid-falling {
+  transform: rotate(-45deg) scale(1.5);
+  filter: drop-shadow(0 0 30px var(--accent-orange)) brightness(1.5);
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.impact-crater {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 10px;
+  background: var(--accent-orange);
+  border-radius: 50%;
+  filter: blur(8px);
+  animation: impact-burst 0.5s ease-out forwards;
+}
+
+@keyframes impact-burst {
+  0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(3); opacity: 0; }
+}
+
+.idle-top .rocket-rising {
+  animation: idle-shake 0.5s infinite alternate ease-in-out;
+}
+
+@keyframes idle-shake {
+  0% { transform: rotate(-45deg) translateY(0px); }
+  100% { transform: rotate(-45deg) translateY(3px); }
+}
+
+.rocket-exhaust {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 25px;
+  background: linear-gradient(to bottom, var(--accent-blue), transparent);
+  filter: blur(2px);
+  animation: exhaust-flicker 0.1s infinite alternate;
+  z-index: -1;
+}
+
+@keyframes exhaust-flicker {
+  0% { height: 15px; opacity: 0.8; }
+  100% { height: 35px; opacity: 1; }
+}
+
 .timeline-item {
   display: flex;
   align-items: center;
@@ -140,7 +225,7 @@
 }
 
 @media (max-width: 768px) {
-  .timeline-beam {
+  .timeline-beam, .timeline-tracker-container {
     left: 1rem;
     transform: none;
   }
