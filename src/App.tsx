@@ -92,6 +92,7 @@ function App() {
   useEffect(() => {
     const visibleEntries = entries.filter(entry => entry.isIntersecting);
     if (visibleEntries.length > 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setActiveSection(visibleEntries[0].target.id);
     }
   }, [entries]);

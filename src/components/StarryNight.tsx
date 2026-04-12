@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 // Relative coordinates for a few major constellations [-1, 1] range
 const constellations = [
@@ -66,7 +66,7 @@ export function StarryNight() {
 
     // Meteor logic
     type Meteor = { x: number; y: number; length: number; speed: number; angle: number; age: number; maxAge: number };
-    let meteors: Meteor[] = [];
+    const meteors: Meteor[] = [];
 
     const spawnMeteor = () => {
       // Spawn near the top/right mostly
