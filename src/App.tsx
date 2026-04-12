@@ -9,6 +9,7 @@ import { Skills } from './components/Skills';
 import { Projects } from './components/Projects';
 import { Experience } from './components/Experience';
 import { Contact } from './components/Contact';
+import { StarryNight } from './components/StarryNight';
 
 function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
@@ -97,6 +98,7 @@ function App() {
 
   return (
     <div className="app-wrapper">
+      <StarryNight />
       <CustomCursor />
       <div className="viewport-frame"></div>
       

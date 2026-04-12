@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Github, Linkedin, Mail } from 'lucide-react';
 import './Hero.css';
-import { StarryNight } from './StarryNight';
 
 export function Hero() {
   const [magneticStyle, setMagneticStyle] = useState<Record<string, React.CSSProperties>>({});
@@ -24,10 +23,9 @@ export function Hero() {
 
   return (
     <section id="hero" className="hero-section">
-      <StarryNight />
       <div className="hero-content">
         <h3 className="hero-subtitle typewriter">HEY, I'M</h3>
-        <h1 className="hero-title text-orange neon-flicker" data-text="Nalin Singh">
+        <h1 className="hero-title cosmic-glow" data-text="Nalin Singh">
           Nalin<br />Singh
         </h1>
         <p className="hero-description fade-in-delay">
@@ -60,7 +58,7 @@ export function Hero() {
             <Linkedin size={24} />
           </a>
           <a
-            href="mailto:hello@example.com"
+            href="mailto:nalinsingh2407@gmail.com"
             className="social-link magnetic"
             style={magneticStyle['mail']}
             onMouseMove={(e) => handleMouseMove(e, 'mail')}

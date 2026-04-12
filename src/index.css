@@ -2,18 +2,27 @@
 
 :root {
   --bg-color: #000000;
-  --text-primary: #ffffff;
-  --text-secondary: #a0a0a0;
-  --accent-orange: #0080FE;
-  --accent-blue: #00FFFF;
+  --text-primary: #E6F1FF;
+  --text-secondary: #9CA3AF;
+  
+  --accent-primary: #38BDF8;
+  --accent-strong: #0EA5E9;
+  --accent-optional: #A78BFA;
+
+  /* Aliasing old variables so the layout doesn't break, mapping them strictly to the new palette */
+  --accent-orange: var(--accent-primary);
+  --accent-blue: var(--accent-strong);
 
   --font-body: 'Monument Extended', sans-serif;
 
-  --glow-orange: 0 0 10px rgba(0, 128, 254, 0.7);
-  --glow-orange-strong: 0 0 20px rgba(0, 128, 254, 0.9);
+  --glow-hover: 0 0 8px var(--accent-primary), 0 0 20px var(--accent-strong);
+  
+  --glow-orange: var(--glow-hover);
+  --glow-orange-strong: 0 0 10px var(--accent-primary), 0 0 30px var(--accent-strong);
+  
   --glass-bg: rgba(20, 20, 20, 0.5);
   --glass-border: rgba(255, 255, 255, 0.1);
-  --frame-inset-shadow: inset 0 0 20px rgba(0, 255, 255, 0.2), inset 0 0 5px rgba(0, 255, 255, 0.5);
+  --frame-inset-shadow: inset 0 0 20px rgba(56, 189, 248, 0.2), inset 0 0 5px rgba(14, 165, 233, 0.5);
 }
 
 * {
@@ -109,11 +118,11 @@ section {
 }
 
 .glow-text {
-  text-shadow: var(--glow-orange);
+  text-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
 }
 
 .glow-text:hover {
-  text-shadow: var(--glow-orange-strong);
+  text-shadow: 0 0 15px rgba(56, 189, 248, 0.6);
 }
 
 .glass-card {

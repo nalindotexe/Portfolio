@@ -74,7 +74,7 @@ export function StarryNight() {
         x: Math.random() * 2, // 0 to 2
         y: (Math.random() * 1) - 1, // -1 to 0 (top half)
         length: Math.random() * 0.2 + 0.1, // 10% to 30% of screen
-        speed: Math.random() * 0.02 + 0.02,
+        speed: Math.random() * 0.015 + 0.015, // 25% slower meteor streak
         angle: (Math.PI / 4) + (Math.random() * 0.2 - 0.1), // Down-leftish
         age: 0,
         maxAge: Math.random() * 50 + 50
@@ -118,7 +118,7 @@ export function StarryNight() {
       ctx.translate(centerX, centerY);
       
       // Add a very slow drift over time
-      timeRotation += 0.0002;
+      timeRotation += 0.00015; // 25% slower drift
       ctx.rotate(baseRotation + timeRotation);
 
       // Draw background stars
@@ -220,13 +220,13 @@ export function StarryNight() {
     <canvas 
       ref={canvasRef} 
       style={{
-        position: 'absolute',
+        position: 'fixed',
         top: 0,
         left: 0,
         width: '100%',
         height: '100%',
         pointerEvents: 'none',
-        zIndex: 0
+        zIndex: -1
       }} 
     />
   );
