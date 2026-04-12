@@ -28,23 +28,24 @@
 
 .typewriter {
   overflow: hidden;
-  border-right: .15em solid var(--accent-orange);
+  border-right: .15em solid var(--accent-primary);
   white-space: nowrap;
   margin: 0 auto;
   letter-spacing: .15em;
+  width: 145px; /* Precision width locking the HEY, I'M text bounds */
   animation: 
-    typing 1.5s steps(40, end),
+    typing 1.2s steps(8, end) forwards,
     blink-caret .75s step-end infinite;
 }
 
 @keyframes typing {
   from { width: 0 }
-  to { width: 100% }
+  /* Omit 'to' so it natively interpolates cleanly to the defined 145px width */
 }
 
 @keyframes blink-caret {
   from, to { border-color: transparent }
-  50% { border-color: var(--accent-orange); }
+  50% { border-color: var(--accent-primary); }
 }
 
 .hero-title {
