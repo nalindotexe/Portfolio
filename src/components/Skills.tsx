@@ -1,5 +1,4 @@
-
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef } from 'react';
 import './Skills.css';
 import { Rocket } from 'lucide-react';
 import {
@@ -29,30 +28,30 @@ function DraggableMarquee({ children }: { children: React.ReactNode }) {
   const lastMouseX = useRef<number | null>(null);
 
   // Auto Scroll logic
-  const step = useCallback((_time: number) => {
-    if (containerRef.current && trackRef.current) {
-      if (!isHovered.current) {
-        containerRef.current.scrollLeft += 1; // Auto scroll speed
-      }
-
-      // Infinite loop constraint
-      const maxScroll = containerRef.current.scrollWidth / 2;
-      if (containerRef.current.scrollLeft >= maxScroll) {
-        containerRef.current.scrollLeft -= maxScroll;
-      } else if (containerRef.current.scrollLeft <= 0) {
-        // Handle dragging backwards infinitely at all times
-        containerRef.current.scrollLeft += maxScroll;
-      }
-    }
-    reqRef.current = requestAnimationFrame(step);
-  }, []);
-
   useEffect(() => {
+    const step = () => {
+      if (containerRef.current && trackRef.current) {
+        if (!isHovered.current) {
+          containerRef.current.scrollLeft += 1; // Auto scroll speed
+        }
+
+        // Infinite loop constraint
+        const maxScroll = containerRef.current.scrollWidth / 2;
+        if (containerRef.current.scrollLeft >= maxScroll) {
+          containerRef.current.scrollLeft -= maxScroll;
+        } else if (containerRef.current.scrollLeft <= 0) {
+          // Handle dragging backwards infinitely at all times
+          containerRef.current.scrollLeft += maxScroll;
+        }
+      }
+      reqRef.current = requestAnimationFrame(step);
+    };
+
     reqRef.current = requestAnimationFrame(step);
     return () => {
       if (reqRef.current) cancelAnimationFrame(reqRef.current);
     };
-  }, [step]);
+  }, []);
 
   // Mouse Hover Events
   const onMouseEnter = (e: React.MouseEvent) => {
