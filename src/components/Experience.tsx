@@ -3,6 +3,15 @@ import './Experience.css';
 
 const experiences = [
   {
+    title: 'Core Team Member',
+    company: 'Algorand Blockchain Club REVA',
+    date: '2025 - PRESENT',
+    responsibilities: [
+      'Organised a 24 Hour blockchain hackathon for 150+ participants.',
+      'Currently working on future events and projects on blockchain with the club'
+    ]
+  },
+  {
     title: 'Student Coordinator',
     company: '</DevBraze>',
     date: '2025 - PRESENT',

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { FaMeteor } from 'react-icons/fa6';
 import './index.css';
 import { useIntersectionObserver } from './hooks/useIntersectionObserver';
 import { SideNav } from './components/SideNav';
@@ -46,7 +47,11 @@ function CustomCursor() {
     };
   }, []);
 
-  return <div id="custom-cursor" ref={cursorRef} className="custom-cursor" style={{ opacity: 0 }}></div>;
+  return (
+    <div id="custom-cursor" ref={cursorRef} className="custom-cursor" style={{ opacity: 0 }}>
+      <FaMeteor className="asteroid-cursor" />
+    </div>
+  );
 }
 
 function App() {

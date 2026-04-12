@@ -202,43 +202,31 @@ section {
     position: fixed;
     top: 0;
     left: 0;
-    width: 20px;
-    height: 20px;
-    border: 2px solid var(--accent-blue);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
     pointer-events: none;
     z-index: 10000;
-    transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
-                height 0.3s cubic-bezier(0.25, 1, 0.5, 1),
-                background-color 0.3s ease,
-                border-color 0.3s ease;
-    mix-blend-mode: difference;
+    mix-blend-mode: normal;
     will-change: transform;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
   }
 
-  .custom-cursor::after {
-    content: '';
-    width: 4px;
-    height: 4px;
-    background: var(--accent-orange);
-    border-radius: 50%;
-    position: absolute;
-    transition: opacity 0.2s ease;
+  .asteroid-cursor {
+    color: var(--accent-orange);
+    font-size: 24px;
+    /* Apply rotation around top-left (-24px X displacement), then translate +22px right to align with the actual mouse coords */
+    transform: translate(22px, -6px) rotate(90deg);
+    transform-origin: top left;
+    filter: drop-shadow(-5px 5px 15px rgba(0, 128, 254, 0.8));
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                color 0.3s ease, 
+                filter 0.3s ease;
   }
 
-  .cursor-hovered {
-    width: 60px;
-    height: 60px;
-    background-color: rgba(0, 255, 255, 0.2);
-    border-color: transparent;
-    mix-blend-mode: normal;
-  }
-
-  .cursor-hovered::after {
-    opacity: 0;
+  .cursor-hovered .asteroid-cursor {
+    /* Scale the asteroid up, which pushes the head further left, so translate further right offset */
+    transform: translate(32px, -8px) rotate(90deg) scale(1.4);
+    color: var(--accent-blue);
+    filter: drop-shadow(-5px 5px 25px rgba(0, 255, 255, 1));
   }
 }

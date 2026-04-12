@@ -1,43 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Github, Linkedin, Mail } from 'lucide-react';
 import './Hero.css';
-
-// Simple particles component
-function Particles() {
-  const [particles, setParticles] = useState<{ id: number; top: string; left: string; size: number; duration: number; delay: number }[]>([]);
-
-  useEffect(() => {
-    // Generate static particle data purely on client side to avoid layout shift
-    const newParticles = Array.from({ length: 40 }).map((_, i) => ({
-      id: i,
-      top: `${Math.random() * 100}%`,
-      left: `${Math.random() * 100}%`,
-      size: Math.random() * 3 + 1, // 1px to 4px
-      duration: Math.random() * 20 + 20, // 20s to 40s
-      delay: Math.random() * -30, // Negative delay to start immediately mid-animation
-    }));
-    setParticles(newParticles);
-  }, []);
-
-  return (
-    <div className="particles-container">
-      {particles.map(p => (
-        <div
-          key={p.id}
-          className="particle"
-          style={{
-            top: p.top,
-            left: p.left,
-            width: `${p.size}px`,
-            height: `${p.size}px`,
-            animationDuration: `${p.duration}s`,
-            animationDelay: `${p.delay}s`,
-          }}
-        />
-      ))}
-    </div>
-  );
-}
+import { StarryNight } from './StarryNight';
 
 export function Hero() {
   const [magneticStyle, setMagneticStyle] = useState<Record<string, React.CSSProperties>>({});
@@ -60,7 +24,7 @@ export function Hero() {
 
   return (
     <section id="hero" className="hero-section">
-      <Particles />
+      <StarryNight />
       <div className="hero-content">
         <h3 className="hero-subtitle typewriter">HEY, I'M</h3>
         <h1 className="hero-title text-orange neon-flicker" data-text="Nalin Singh">
