@@ -10,6 +10,10 @@ import { Projects } from './components/Projects';
 import { Experience } from './components/Experience';
 import { Contact } from './components/Contact';
 import { StarryNight } from './components/StarryNight';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);

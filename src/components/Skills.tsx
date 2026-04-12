@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import './Skills.css';
 import { Rocket } from 'lucide-react';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 import {
   SiC,
   SiPython,
@@ -132,8 +134,69 @@ const skillCategories = [
 ];
 
 export function Skills() {
+  const sectionRef = useRef<HTMLElement>(null);
+  
+  useGSAP(() => {
+    gsap.fromTo(
+      '.skill-category',
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1, 
+        y: 0, 
+        duration: 0.6,
+        stagger: 0.3,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 80%',
+        }
+      }
+    );
+  }, { scope: sectionRef });
+
+  const handleCardEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+    gsap.to(e.currentTarget, {
+      y: -5,
+      backgroundColor: 'rgba(56, 189, 248, 0.05)',
+      borderColor: 'var(--accent-primary)',
+      boxShadow: '0 0 8px var(--accent-primary), 0 0 20px var(--accent-strong)',
+      duration: 0.3,
+      ease: 'power1.inOut'
+    });
+    
+    // Animate inner icon drop-shadow
+    const icon = e.currentTarget.querySelector('.skill-icon');
+    if (icon) {
+      gsap.to(icon, {
+        filter: 'drop-shadow(0 0 10px rgba(56, 189, 248, 0.8))',
+        duration: 0.3,
+        ease: 'power1.inOut'
+      });
+    }
+  };
+
+  const handleCardLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    gsap.to(e.currentTarget, {
+      y: 0,
+      backgroundColor: 'transparent',
+      borderColor: 'rgba(255, 255, 255, 0.1)',
+      boxShadow: 'none',
+      duration: 0.4,
+      ease: 'power1.inOut'
+    });
+    
+    const icon = e.currentTarget.querySelector('.skill-icon');
+    if (icon) {
+      gsap.to(icon, {
+        filter: 'drop-shadow(0 0 5px rgba(56, 189, 248, 0.5))',
+        duration: 0.4,
+        ease: 'power1.inOut'
+      });
+    }
+  };
+
   return (
-    <section id="skills" className="skills-section fade-in-section">
+    <section id="skills" className="skills-section" ref={sectionRef}>
       <div className="section-header center-header">
         <h3 className="section-subtitle">TECHNICAL ARSENAL</h3>
         <h2 className="section-title text-orange glow-text">SKILLS & TECHNOLOGIES</h2>
@@ -150,7 +213,12 @@ export function Skills() {
 
               <DraggableMarquee>
                 {extendedSkills.map((skill, index) => (
-                  <div key={`${skill.name}-${index}`} className="skill-card glass-card">
+                  <div 
+                    key={`${skill.name}-${index}`} 
+                    className="skill-card glass-card"
+                    onMouseEnter={handleCardEnter}
+                    onMouseLeave={handleCardLeave}
+                  >
                     <span className="skill-icon text-orange">{skill.icon}</span>
                     <span className="skill-name">{skill.name}</span>
                   </div>

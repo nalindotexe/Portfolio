@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import './Experience.css';
 import { Rocket } from 'lucide-react';
 import { FaMeteor } from 'react-icons/fa6';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 
 const experiences = [
   {
@@ -49,21 +51,83 @@ function TimelineItem({ exp, index }: { exp: typeof experiences[0], index: numbe
   const itemRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        setIsVisible(true);
+  useGSAP(() => {
+    gsap.fromTo(itemRef.current,
+      { opacity: 0, x: index % 2 === 0 ? -50 : 50 },
+      {
+        opacity: 1,
+        x: 0,
+        duration: 0.6,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: itemRef.current,
+          start: 'top 85%',
+          onEnter: () => setIsVisible(true)
+        }
       }
-    }, { threshold: 0.3 });
+    );
+  }, { scope: itemRef });
 
-    if (itemRef.current) observer.observe(itemRef.current);
-    return () => observer.disconnect();
-  }, []);
+  const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+    const node = e.currentTarget.querySelector('.timeline-node');
+    const content = e.currentTarget.querySelector('.timeline-content');
+
+    if (content) {
+      gsap.to(content, {
+        y: -5,
+        borderColor: 'var(--accent-primary)',
+        boxShadow: 'var(--glow-hover)',
+        backgroundColor: 'rgba(56, 189, 248, 0.03)',
+        duration: 0.3,
+        ease: 'power1.inOut'
+      });
+    }
+
+    if (node) {
+      gsap.to(node, {
+        scale: 1.2,
+        borderColor: 'var(--accent-primary)',
+        backgroundColor: 'var(--accent-primary)',
+        boxShadow: 'var(--glow-hover)',
+        duration: 0.3,
+        ease: 'power1.inOut'
+      });
+    }
+  };
+
+  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    const node = e.currentTarget.querySelector('.timeline-node');
+    const content = e.currentTarget.querySelector('.timeline-content');
+
+    if (content) {
+      gsap.to(content, {
+        y: 0,
+        borderColor: 'rgba(56, 189, 248, 0.3)',
+        boxShadow: 'none',
+        backgroundColor: 'var(--glass-bg)',
+        duration: 0.4,
+        ease: 'power2.out'
+      });
+    }
+
+    if (node) {
+      gsap.to(node, {
+        scale: 1,
+        borderColor: 'var(--accent-primary)',
+        backgroundColor: 'var(--bg-color)',
+        boxShadow: '0 0 10px rgba(56, 189, 248, 0.5)',
+        duration: 0.4,
+        ease: 'power2.out'
+      });
+    }
+  };
 
   return (
     <div
       ref={itemRef}
       className={`timeline-item ${isVisible ? 'activated' : ''} ${index % 2 === 0 ? 'left' : 'right'}`}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <div className="timeline-node"></div>
       <div className="timeline-content glass-card interactive-card">
@@ -122,8 +186,26 @@ export function Experience() {
   const isAtTop = scrollProgress <= 0;
   const isAtBottom = scrollProgress >= 1;
 
+  useGSAP(() => {
+    gsap.fromTo(
+      '.timeline-item',
+      { opacity: 0, x: -50 },
+      {
+        opacity: 1,
+        x: 0,
+        duration: 0.6,
+        stagger: 0.3,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 80%'
+        }
+      }
+    );
+  }, { scope: sectionRef });
+
   return (
-    <section id="experience" className="experience-section fade-in-section" ref={sectionRef}>
+    <section id="experience" className="experience-section" ref={sectionRef}>
       <div className="section-header center-header">
         <h3 className="section-subtitle">CAREER PATH</h3>
         <h2 className="section-title text-orange glow-text">JOURNEY</h2>

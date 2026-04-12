@@ -1,7 +1,9 @@
 import { ExternalLink, Github } from 'lucide-react';
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import type { MouseEvent } from 'react';
 import './Projects.css';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 
 const projects = [
   {
@@ -29,7 +31,6 @@ const projects = [
 
 function ProjectCard({ project }: { project: typeof projects[0] }) {
   const cardRef = useRef<HTMLDivElement>(null);
-  const [style, setStyle] = useState<React.CSSProperties>({});
 
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
@@ -43,27 +44,48 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
     const rotateX = ((y - centerY) / centerY) * -2; // Reduced from -10 for easier clicking
     const rotateY = ((x - centerX) / centerX) * 2; // Reduced from 10
 
-    setStyle({
-      transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`,
+    gsap.to(cardRef.current, {
+      rotationX: rotateX,
+      rotationY: rotateY,
+      scale: 1.01,
       '--mouse-x': `${x}px`,
       '--mouse-y': `${y}px`,
-    } as React.CSSProperties);
+      duration: 0.1,
+      ease: 'power1.out'
+    });
+  };
+
+  const handleMouseEnter = () => {
+    if (!cardRef.current) return;
+    gsap.to(cardRef.current, {
+      borderColor: 'var(--accent-primary)',
+      boxShadow: 'var(--glow-hover)',
+      duration: 0.3,
+      ease: 'power1.inOut'
+    });
   };
 
   const handleMouseLeave = () => {
-    setStyle({
-      transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)',
+    if (!cardRef.current) return;
+    gsap.to(cardRef.current, {
+      rotationX: 0,
+      rotationY: 0,
+      scale: 1,
       '--mouse-x': '50%',
       '--mouse-y': '50%',
-    } as React.CSSProperties);
+      borderColor: 'rgba(255, 255, 255, 0.1)',
+      boxShadow: 'none',
+      duration: 0.4,
+      ease: 'power2.out'
+    });
   };
 
   return (
     <div
       ref={cardRef}
       className="project-card glass-card interactive-card"
-      style={style}
       onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       <div className="card-spotlight"></div>
@@ -91,8 +113,28 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
 }
 
 export function Projects() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useGSAP(() => {
+    gsap.fromTo(
+      '.project-card',
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        stagger: 0.2,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 80%'
+        }
+      }
+    );
+  }, { scope: sectionRef });
+
   return (
-    <section id="projects" className="projects-section fade-in-section">
+    <section id="projects" className="projects-section" ref={sectionRef}>
       <div className="section-header">
         <h3 className="section-subtitle">SELECTED WORK</h3>
         <h2 className="section-title text-orange glow-text">FEATURED PROJECTS</h2>

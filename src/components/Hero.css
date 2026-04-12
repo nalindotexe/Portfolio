@@ -90,18 +90,7 @@
   margin-top: 1rem;
 }
 
-.fade-in-delay {
-  animation: fade-up 1s ease-out 1.5s both;
-}
-
-.fade-in-delay-more {
-  animation: fade-up 1s ease-out 2s both;
-}
-
-@keyframes fade-up {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+/* CSS Animations stripped - Controlled by GSAP now */
 
 .hero-socials {
   display: flex;
@@ -111,7 +100,6 @@
 
 .social-link {
   color: var(--accent-blue);
-  transition: color 0.3s ease, filter 0.3s ease;
   filter: drop-shadow(0 0 5px rgba(0, 255, 255, 0.2));
   display: inline-block;
   padding: 10px;
@@ -120,20 +108,7 @@
 }
 
 .magnetic {
-  /* Using JS for transform, so we define transition for other properties */
-  transition: transform 0.1s cubic-bezier(0.2, 0.8, 0.4, 1), 
-              color 0.3s ease, 
-              filter 0.3s ease,
-              border-color 0.3s ease,
-              background-color 0.3s ease;
-}
-
-.magnetic:hover {
-  color: var(--text-primary);
-  border-color: var(--accent-primary);
-  background-color: rgba(56, 189, 248, 0.1);
-  /* Use filter drop-shadow to map to the new glow style natively */
-  filter: drop-shadow(0 0 8px var(--accent-primary)) drop-shadow(0 0 20px var(--accent-strong));
+  /* Controlled by GSAP */
 }
 
 @media (max-width: 768px) {

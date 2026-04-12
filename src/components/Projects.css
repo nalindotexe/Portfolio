@@ -24,9 +24,7 @@
 }
 
 .interactive-card:hover {
-  border-color: var(--accent-primary);
   z-index: 10;
-  box-shadow: var(--glow-hover);
 }
 
 /* Specific spotlight effect */

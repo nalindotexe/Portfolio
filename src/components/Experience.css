@@ -172,20 +172,7 @@
   border-color: rgba(56, 189, 248, 0.3);
 }
 
-.timeline-item.activated .timeline-content:hover {
-  transform: translateY(-5px);
-  border-color: var(--accent-primary);
-  box-shadow: var(--glow-hover);
-  background: rgba(56, 189, 248, 0.03);
-}
-
-/* Make the node glow when the item is hovered */
-.timeline-item.activated:hover .timeline-node {
-  border-color: var(--accent-primary);
-  background: var(--accent-primary);
-  box-shadow: var(--glow-hover);
-  transform: translate(-50%, 0) scale(1.2);
-}
+/* Note: Hover effects for nodes and content are controlled via JS GSAP rendering natively */
 
 .timeline-date {
   margin-bottom: 1rem;
