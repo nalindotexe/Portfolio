@@ -12,6 +12,7 @@ import { Contact } from './components/Contact';
 import { StarryNight } from './components/StarryNight';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Lenis from 'lenis';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -87,6 +88,24 @@ function CustomCursor() {
 function App() {
   const { setElements, entries } = useIntersectionObserver();
   const [activeSection, setActiveSection] = React.useState('hero');
+
+  useEffect(() => {
+    const lenis = new Lenis();
+
+    lenis.on('scroll', ScrollTrigger.update);
+
+    const update = (time: number) => {
+      lenis.raf(time * 1000);
+    };
+
+    gsap.ticker.add(update);
+    gsap.ticker.lagSmoothing(0);
+
+    return () => {
+      lenis.destroy();
+      gsap.ticker.remove(update);
+    };
+  }, []);
 
   useEffect(() => {
     const sectionElements = Array.from(document.querySelectorAll('section'));
